@@ -1,0 +1,7 @@
+{
+  "name": "ali-tracking-v2",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
