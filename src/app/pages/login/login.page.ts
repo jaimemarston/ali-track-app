@@ -61,7 +61,7 @@ export class LoginPage implements OnInit, AfterViewInit, OnDestroy {
             this.navController.navigateRoot('/apps');
         } else {
             this.authService.logout(true);
-            this.presentToast();
+            this.presentToast(error.message);
         }
     }
 
@@ -72,9 +72,9 @@ export class LoginPage implements OnInit, AfterViewInit, OnDestroy {
         this.loading.present();
     }
 
-    async presentToast() {
+    async presentToast(mensaje: string) {
         const toast = await this.toastController.create({
-            message: 'Credenciales incorrectas',
+            message: 'Credenciales incorrectas' + mensaje,
             duration: 3000,
             color: 'warning',
             showCloseButton: true
