@@ -17,11 +17,29 @@ const routes: Routes = [
                 ]
             },
             {
+                path: 'my-travels',
+                children: [
+                    {
+                        path: '',
+                        loadChildren: '../pages/my-travels/my-travels.module#MyTravelsPageModule'
+                    }
+                ]
+            },
+            {
                 path: 'my-account',
                 children: [
                     {
                         path: '',
                         loadChildren: '../pages/my-account/my-account.module#MyAccountPageModule'
+                    }
+                ]
+            },
+            {
+                path: 'map-detail',
+                children: [
+                    {
+                        path: '',
+                        loadChildren: '../pages/map-detail/map-detail.module#MapDetailPageModule'
                     }
                 ]
             },

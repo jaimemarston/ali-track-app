@@ -57,11 +57,15 @@ export class LoginPage implements OnInit, AfterViewInit, OnDestroy {
         const [error, auth] = await to(this.authService.authenticate(this.loginForm.getRawValue()).toPromise());
         await this.loading.dismiss();
         if (auth) {
-            this.menu.enable(true);
-            this.navController.navigateRoot('/apps');
+            if (auth.role === 1) {
+                this.menu.enable(false);
+                this.navController.navigateRoot('/map-detail');
+            } else {
+                this.menu.enable(true);
+                this.navController.navigateRoot('/apps');
+            }
         } else {
-            this.authService.logout(true);
-            this.presentToast(error.message);
+            this.presentToast();
         }
     }
 
@@ -72,9 +76,9 @@ export class LoginPage implements OnInit, AfterViewInit, OnDestroy {
         this.loading.present();
     }
 
-    async presentToast(mensaje: string) {
+    async presentToast() {
         const toast = await this.toastController.create({
-            message: 'Credenciales incorrectas' + mensaje,
+            message: 'Credenciales incorrectas',
             duration: 3000,
             color: 'warning',
             showCloseButton: true

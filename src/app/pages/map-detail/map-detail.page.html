@@ -1,0 +1,55 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-button (click)="authService.logout(true)">
+                <ion-icon name="log-in"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title>
+            Monitor
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-fab vertical="top" horizontal="end" slot="fixed">
+        <ion-fab-button (click)="getRealtimeUbication()">
+            <ion-icon name="locate"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+    <mgl-map *ngIf="init"
+             [style]="'mapbox://styles/mapbox/streets-v9'"
+             [zoom]="[12]"
+             [center]="[-74.50, 40]">
+        <mgl-marker *ngIf="travel?.start_latitude"
+                    [lngLat]="[travel?.start_longitude, travel?.start_latitude]">
+            <app-ali-marker></app-ali-marker>
+        </mgl-marker>
+
+        <mgl-marker *ngIf="travel?.end_longitude"
+                    [lngLat]="[travel?.end_longitude, travel?.end_latitude]">
+            <app-ali-marker></app-ali-marker>
+        </mgl-marker>
+
+        <mgl-marker *ngIf="realTimeDone" [lngLat]="[realTime.longitude, realTime.latitude]">
+            <app-ali-marker [realTime]="true"></app-ali-marker>
+        </mgl-marker>
+
+        <mgl-layer *ngIf="source"
+                   id="LineString"
+                   type="line"
+                   [source]="source"
+                   [paint]="{'line-color': '#BF93E4','line-width': 5}"
+                   [layout]="{'line-join': 'round','line-cap': 'round'}">
+        </mgl-layer>
+    </mgl-map>
+</ion-content>
+
+<ion-footer>
+    <ion-toolbar>
+        <ion-button shape="round" expand="full" (click)="openTravels()">Ver viajes</ion-button>
+    </ion-toolbar>
+</ion-footer>
